@@ -7,8 +7,9 @@ export async function createCardForDeckController(req: Request, res: Response) {
   try {
     const deck = await Deck.findById(deckId);
     if (!deck) return res.status(400).send("no deck of this id exists");
-    const { text } = req.body;
-    deck.cards.push(text);
+
+    const { text, title } = req.body;
+    deck.cards.push({ text, title });
     await deck.save();
     res.json(deck);
   } catch (err) {

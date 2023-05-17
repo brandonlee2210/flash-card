@@ -4,6 +4,10 @@
   gap: 20px;
 }
 
+ul li {
+  list-style: none;
+}
+
 .Deck form {
   display: flex;
   gap: 10px;
@@ -18,29 +22,54 @@
 
 .cards {
   display: grid;
-  width: 600px;
+  width: 1200px;
   margin: 0 auto;
-  grid-gap: 10px;
-  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 15px;
+  grid-template-columns: repeat(4, 1fr);
   color: black;
 }
 
-.cards li {
+.card {
+  cursor: pointer;
   position: relative;
+  transition: transform 1500ms;
+  transform-style: preserve-3d;
+  height: 160px;
+}
+
+.back,
+.front {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: #fff;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 120px;
-  background: white;
   border: 1px solid white;
   border-radius: 10px;
-  padding: 12px;
-  padding-top: 30px;
+  box-shadow: 4px 5px 5px rgba(255, 255, 255, 0.4);
+  backface-visibility: hidden;
 }
 
-.cards li button {
+.back {
+  transform: rotateY(180deg);
+}
+
+.card.flip {
+  transform: rotateY(180deg);
+}
+
+.back button,
+.front button {
   position: absolute;
   font-size: 10px;
   top: 5px;
   right: 5px;
+}
+
+.front {
+  font-size: 26px;
+  font-weight: 700;
 }

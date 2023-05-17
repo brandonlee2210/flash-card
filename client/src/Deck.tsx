@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { TDeck } from "./api/getDecks";
+import { TDeck, TCard } from "./api/getDecks";
 import { getDeck } from "./api/getDeck";
 import { deleteCard } from "./api/deleteCard";
 import { createCard } from "./api/createCard";
@@ -10,10 +10,18 @@ import { useParams } from "react-router-dom";
 
 export default function Deck() {
   const [deck, setDeck] = useState<TDeck | undefined>();
-  const [cards, setCards] = useState<string[]>([]);
+  const [cards, setCards] = useState<TCard[] | []>([]);
   const [text, setText] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
+
+  const handleToggle = (e: React.MouseEvent<HTMLElement>) => {
+    const card = e.currentTarget as HTMLElement;
+    card.classList.toggle("flip");
+  };
 
   const { deckId } = useParams();
+
+  console.log(cards);
 
   useEffect(() => {
     const fetchDeck = async () => {
@@ -21,6 +29,8 @@ export default function Deck() {
 
       const deck = await getDeck(deckId);
       setDeck(deck);
+      console.log(deck.cards);
+
       setCards(deck.cards);
     };
 
@@ -32,8 +42,8 @@ export default function Deck() {
 
     if (!deckId) return;
 
-    await createCard(deckId, text);
-    setCards((cards) => [...cards, text]);
+    await createCard(deckId, text, title);
+    setCards((cards) => [...cards, { text, title }]);
 
     setText("");
   };
@@ -50,15 +60,44 @@ export default function Deck() {
       <h1>{deck?.title}</h1>
       <ul className="cards">
         {cards.map((card, index) => (
-          <li key={index}>
-            <button onClick={() => handleDeleteCard(index)}>X</button>
-            {card}
-          </li>
+          <div className="card" key={card.title} onClick={handleToggle}>
+            <li className="back">
+              <button
+                onClick={(e: any) => {
+                  e.stopPropagation();
+                  handleDeleteCard(index);
+                }}
+              >
+                X
+              </button>
+              {card.text}
+            </li>
+            <li className="front">
+              <button
+                onClick={(e: any) => {
+                  e.stopPropagation();
+                  handleDeleteCard(index);
+                }}
+              >
+                X
+              </button>
+              {card.title}
+            </li>
+          </div>
         ))}
       </ul>
 
       <form onSubmit={handleSubmit}>
         <label htmlFor="card-text">Card text</label>
+        <input
+          type="text"
+          id="card-text"
+          placeholder="Cart title..."
+          value={title}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setTitle(e.target.value)
+          }
+        />
         <input
           type="text"
           id="card-text"
@@ -68,6 +107,7 @@ export default function Deck() {
             setText(e.target.value)
           }
         />
+
         <button>Create Card</button>
       </form>
     </div>

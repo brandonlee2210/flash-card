@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 
 const DeckSchema = new Schema({
   title: String,
-  cards: [String],
+  cards: [{}],
 });
 
 const Deck = mongoose.model("Deck", DeckSchema);
