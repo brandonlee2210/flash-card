@@ -1,11 +1,10 @@
 import { API_URL } from "./config";
-import { TDeck } from "./getDecks";
 
-export async function createCard(deckId: string, text: string): Promise<TDeck> {
-  const response = await fetch(`${API_URL}/decks/${deckId}/cards`, {
+export async function createDeck(title: string) {
+  const response = await fetch(`${API_URL}/decks`, {
     method: "POST",
     body: JSON.stringify({
-      text,
+      title,
     }),
     headers: {
       "Content-Type": "application/json",
