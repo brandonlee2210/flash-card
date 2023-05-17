@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
 import { createDeck } from "./api/createDeck";
+import { deleteDeck } from "./api/deleteDeck";
 import { getDecks } from "./api/getDecks";
 import "./App.css";
+import "./Deck.css";
 import { TDeck } from "./api/getDecks";
 
 function App() {
@@ -14,6 +18,11 @@ function App() {
     const deck = await createDeck(title);
     setDecks((decks) => [...decks, deck]);
     setTitle("");
+  }
+
+  async function handleDeleteDeck(deckId: string) {
+    await deleteDeck(deckId);
+    setDecks(decks.filter((deck) => deck._id !== deckId));
   }
 
   useEffect(() => {
@@ -31,9 +40,14 @@ function App() {
         <h1>Your Decks</h1>
 
         <ul className="decks">
-          {decks.map((decks) => (
+          {decks.map((deck) => (
             <li key={decks._id}>
-              <button className="deck">{decks.title}</button>
+              <button
+                className="deck"
+                onClick={() => handleDeleteDeck(deck._id)}
+              >
+                X
+              </button>
             </li>
           ))}
         </ul>
