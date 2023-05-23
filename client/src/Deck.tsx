@@ -29,7 +29,6 @@ export default function Deck() {
 
       const deck = await getDeck(deckId);
       setDeck(deck);
-      console.log(deck.cards);
 
       setCards(deck.cards);
     };
@@ -63,7 +62,8 @@ export default function Deck() {
           <div className="card" key={card.title} onClick={handleToggle}>
             <li className="back">
               <button
-                onClick={(e: any) => {
+                className="delete"
+                onClick={(e: React.MouseEvent) => {
                   e.stopPropagation();
                   handleDeleteCard(index);
                 }}
@@ -74,7 +74,8 @@ export default function Deck() {
             </li>
             <li className="front">
               <button
-                onClick={(e: any) => {
+                className="delete"
+                onClick={(e: React.MouseEvent) => {
                   e.stopPropagation();
                   handleDeleteCard(index);
                 }}

@@ -5,15 +5,11 @@ export function Header() {
     <div className="Header">
       <div className="container">
         <div>
-          <a href="/">FlashCardSage</a>
+          <a href="/">Homepage</a>
         </div>
 
         <div>
           <a href="/">Decks</a>
-        </div>
-
-        <div>
-          <a href="/login">login</a>
         </div>
       </div>
     </div>

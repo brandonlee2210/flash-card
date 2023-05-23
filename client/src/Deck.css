@@ -9,6 +9,7 @@ ul li {
 }
 
 .Deck form {
+  margin-top: 30px;
   display: flex;
   gap: 10px;
   justify-content: center;
@@ -25,11 +26,13 @@ ul li {
   width: 1200px;
   margin: 0 auto;
   grid-gap: 15px;
+  row-gap: 40px;
   grid-template-columns: repeat(4, 1fr);
   color: black;
 }
 
 .card {
+  /* padding-top: 30px; */
   cursor: pointer;
   position: relative;
   transition: transform 1500ms;
@@ -51,18 +54,22 @@ ul li {
   border-radius: 10px;
   box-shadow: 4px 5px 5px rgba(255, 255, 255, 0.4);
   backface-visibility: hidden;
+  padding-top: 20px;
 }
 
 .back {
   transform: rotateY(180deg);
+
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .card.flip {
   transform: rotateY(180deg);
 }
 
-.back button,
-.front button {
+.back .delete,
+.front .delete {
   position: absolute;
   font-size: 10px;
   top: 5px;
@@ -73,3 +80,13 @@ ul li {
   font-size: 26px;
   font-weight: 700;
 }
+
+/* button.edit {
+  text: black;
+  font-size: 12px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0;
+  z-index: 30;
+} */
